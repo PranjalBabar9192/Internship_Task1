@@ -1,0 +1,94 @@
+CREATE DATABASE Library_Management;
+GO
+
+USE Library_Management;
+GO
+
+CREATE TABLE Categories (
+     CategoryID INT PRIMARY KEY IDENTITY(1,1)
+    ,CategoryName NVARCHAR(100)
+	,Is_active BIT DEFAULT 1
+    ,Created_by INT NOT NULL
+    ,Createddate DATETIME DEFAULT getdate()
+    ,Updatedby INT NULL
+    ,Updateddate DATETIME NULL
+);
+
+
+CREATE TABLE Books (
+     BookID INT PRIMARY KEY IDENTITY(1,1)
+    ,Title NVARCHAR(100)
+    ,ISBN VARCHAR(13) UNIQUE
+    ,Publisher NVARCHAR(100)
+    ,YearPublished INT
+	,CategoryID INT
+	,Is_active BIT DEFAULT 1
+    ,Created_by INT NOT NULL
+    ,Createddate DATETIME DEFAULT getdate()
+    ,Updatedby INT NULL
+    ,Updateddate DATETIME NULL
+	,FOREIGN KEY (CategoryID) REFERENCES Categories(CategoryID)
+);
+
+CREATE TABLE Members (
+     MemberID INT PRIMARY KEY IDENTITY(1,1)
+    ,Name NVARCHAR(100)
+    ,Email NVARCHAR(100) UNIQUE
+    ,Phone VARCHAR(15)
+    ,JoinDate DATE DEFAULT GETDATE()
+	,Is_active BIT DEFAULT 1
+    ,created_by INT NOT NULL
+    ,createddate DATETIME DEFAULT getdate()
+    ,updatedby INT NULL
+    ,updateddate DATETIME NULL
+);
+
+CREATE TABLE Authors (
+     AuthorID INT PRIMARY KEY IDENTITY(1,1)
+    ,Name NVARCHAR(100)
+    ,Bio NVARCHAR(MAX) NULL
+    ,Is_active BIT DEFAULT 1
+    ,Created_by INT NOT NULL
+    ,Createddate DATETIME DEFAULT GETDATE()
+    ,Updatedby INT NULL
+    ,Updateddate DATETIME NULL
+);
+
+CREATE TABLE BookAuthors (
+     BookID INT
+    ,AuthorID INT
+    ,PRIMARY KEY (BookID, AuthorID)
+    ,FOREIGN KEY (BookID) REFERENCES Books(BookID)
+    ,FOREIGN KEY (AuthorID) REFERENCES Authors(AuthorID)
+);
+
+CREATE TABLE Librarians (
+     LibrarianID INT PRIMARY KEY IDENTITY(1,1)
+    ,Name NVARCHAR(100)
+    ,Email NVARCHAR(100) UNIQUE
+	,Is_active BIT DEFAULT 1
+    ,Created_by INT NOT NULL
+    ,Createddate DATETIME DEFAULT getdate()
+    ,Updatedby INT NULL
+    ,Updateddate DATETIME NULL
+);
+
+CREATE TABLE Borrowed_Books (
+     IssueID INT PRIMARY KEY IDENTITY(1,1)
+    ,BookID INT NOT NULL
+    ,MemberID INT NOT NULL
+    ,LibrarianID INT NOT NULL
+    ,IssueDate DATE DEFAULT GETDATE()
+    ,ReturnDate DATE NULL
+	,ActualReturnDate DATE NULL
+    ,FineAmount DECIMAL(10,2) DEFAULT 0
+    ,IsReturned BIT DEFAULT 0
+	,Is_active BIT DEFAULT 1
+    ,Created_by INT NOT NULL
+    ,Createddate DATETIME DEFAULT getdate()
+    ,Updatedby INT NULL
+    ,Updateddate DATETIME NULL
+	,FOREIGN KEY (MemberID) REFERENCES Members (MemberID )
+    ,FOREIGN KEY (LibrarianID) REFERENCES Librarians (LibrarianID )
+    ,FOREIGN KEY (BookID) REFERENCES  Books (BookID )
+);
