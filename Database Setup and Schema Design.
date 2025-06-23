@@ -7,7 +7,7 @@ GO
 CREATE TABLE Categories (
      CategoryID INT PRIMARY KEY IDENTITY(1,1)
     ,CategoryName NVARCHAR(100)
-	,Is_active BIT DEFAULT 1
+    ,Is_active BIT DEFAULT 1
     ,Created_by INT NOT NULL
     ,Createddate DATETIME DEFAULT getdate()
     ,Updatedby INT NULL
@@ -21,13 +21,13 @@ CREATE TABLE Books (
     ,ISBN VARCHAR(13) UNIQUE
     ,Publisher NVARCHAR(100)
     ,YearPublished INT
-	,CategoryID INT
-	,Is_active BIT DEFAULT 1
+    ,CategoryID INT
+    ,Is_active BIT DEFAULT 1
     ,Created_by INT NOT NULL
     ,Createddate DATETIME DEFAULT getdate()
     ,Updatedby INT NULL
     ,Updateddate DATETIME NULL
-	,FOREIGN KEY (CategoryID) REFERENCES Categories(CategoryID)
+    ,FOREIGN KEY (CategoryID) REFERENCES Categories(CategoryID)
 );
 
 CREATE TABLE Members (
@@ -36,7 +36,7 @@ CREATE TABLE Members (
     ,Email NVARCHAR(100) UNIQUE
     ,Phone VARCHAR(15)
     ,JoinDate DATE DEFAULT GETDATE()
-	,Is_active BIT DEFAULT 1
+    ,Is_active BIT DEFAULT 1
     ,created_by INT NOT NULL
     ,createddate DATETIME DEFAULT getdate()
     ,updatedby INT NULL
@@ -66,7 +66,7 @@ CREATE TABLE Librarians (
      LibrarianID INT PRIMARY KEY IDENTITY(1,1)
     ,Name NVARCHAR(100)
     ,Email NVARCHAR(100) UNIQUE
-	,Is_active BIT DEFAULT 1
+    ,Is_active BIT DEFAULT 1
     ,Created_by INT NOT NULL
     ,Createddate DATETIME DEFAULT getdate()
     ,Updatedby INT NULL
@@ -80,15 +80,15 @@ CREATE TABLE Borrowed_Books (
     ,LibrarianID INT NOT NULL
     ,IssueDate DATE DEFAULT GETDATE()
     ,ReturnDate DATE NULL
-	,ActualReturnDate DATE NULL
+    ,ActualReturnDate DATE NULL
     ,FineAmount DECIMAL(10,2) DEFAULT 0
     ,IsReturned BIT DEFAULT 0
-	,Is_active BIT DEFAULT 1
+    ,Is_active BIT DEFAULT 1
     ,Created_by INT NOT NULL
     ,Createddate DATETIME DEFAULT getdate()
     ,Updatedby INT NULL
     ,Updateddate DATETIME NULL
-	,FOREIGN KEY (MemberID) REFERENCES Members (MemberID )
+    ,FOREIGN KEY (MemberID) REFERENCES Members (MemberID )
     ,FOREIGN KEY (LibrarianID) REFERENCES Librarians (LibrarianID )
     ,FOREIGN KEY (BookID) REFERENCES  Books (BookID )
 );
