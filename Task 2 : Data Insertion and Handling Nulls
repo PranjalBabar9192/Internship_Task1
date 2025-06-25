@@ -1,0 +1,46 @@
+CREATE TABLE Employees (
+    EmpID INT PRIMARY KEY,
+    Name NVARCHAR(100) NOT NULL,
+    Department NVARCHAR(50) NULL,
+    Salary DECIMAL(10, 2) DEFAULT 30000,
+    Email NVARCHAR(100) NULL
+);
+
+-- Insert with all fields
+INSERT INTO Employees (EmpID, Name, Department, Salary, Email)
+VALUES (1, 'Alice', 'HR', 50000, 'alice@example.com');
+
+-- Insert using DEFAULT for Salary
+INSERT INTO Employees (EmpID, Name, Department, Email)
+VALUES (2, 'Bob', 'Finance', 'bob@example.com');
+
+-- Insert using NULL for Department
+INSERT INTO Employees (EmpID, Name, Department, Salary, Email)
+VALUES (3, 'Charlie', NULL, 45000, 'charlie@example.com');
+
+-- Insert using NULL for optional fields
+INSERT INTO Employees (EmpID, Name)
+VALUES (4, 'David');
+
+
+-- Update Department for a specific employee
+UPDATE Employees
+SET Department = 'IT'
+WHERE EmpID = 3;
+
+-- Update Salary for multiple employees
+UPDATE Employees
+SET Salary = Salary + 5000
+WHERE Department = 'Finance';
+
+
+-- Delete a specific employee
+DELETE FROM Employees
+WHERE EmpID = 4;
+
+-- Delete employees with NULL department
+DELETE FROM Employees
+WHERE Department IS NULL;
+
+
+SELECT * FROM Employees;
